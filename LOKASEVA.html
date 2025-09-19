@@ -1,0 +1,1753 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panduan Dokumen Indonesia - Lengkap & Mudah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/framer-motion@11.0.8/dist/framer-motion.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Updated Elegant Blue Gradient */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #2a639a 0%, #3a7bbd 100%); /* Elegant Blue gradient */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .welcome-text {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.5s forwards;
+        }
+        
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Updated Elegant Blue Hero Gradient */
+        .hero-gradient {
+            background: linear-gradient(135deg, #2a639a 0%, #3a7bbd 100%); /* Elegant Blue gradient */
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .search-highlight {
+            background-color: #fef08a;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInAnimation 0.8s ease forwards;
+        }
+        
+        @keyframes fadeInAnimation {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Updated Elegant Blue Scroll Indicator */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, #2a639a, #3a7bbd); /* Elegant Blue gradient */
+            z-index: 1000;
+            transition: width 0.1s ease;
+        }
+        
+        /* Updated Elegant Blue Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #2a639a, #3a7bbd); /* Elegant Blue gradient */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            transform: scale(1.1);
+        }
+        
+        .sidebar {
+            position: fixed;
+            left: -300px;
+            top: 0;
+            width: 300px;
+            height: 100vh;
+            background: white;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            transition: left 0.3s ease;
+            z-index: 1001;
+            overflow-y: auto;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .sidebar-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .dark-mode {
+            background-color: #1a1a1a;
+            color: white;
+        }
+        
+        .dark-mode .bg-white {
+            background-color: #2d2d2d !important;
+            color: white;
+        }
+        
+        .dark-mode .text-gray-600 {
+            color: #a1a1aa !important;
+        }
+        
+        .dark-mode .text-gray-800 {
+            color: #e4e4e7 !important;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        /* Updated Elegant Blue Timeline before */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #2a639a, #3a7bbd); /* Elegant Blue gradient */
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        /* Updated Elegant Blue Timeline Item before */
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -22px;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #2a639a; /* Elegant Blue */
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px #2a639a; /* Elegant Blue */
+        }
+        
+        /* Custom style for Lokaseva logo to ensure visibility */
+        /*.lokaseva-logo {
+            filter: brightness(0) invert(1); /* Makes the logo white */
+            /* If the above filter doesn't work consistently, you might need to use a pre-processed white version of the logo */
+            /* For example, if you have a white version of the logo at a different URL: */
+            /* content: url('URL_TO_WHITE_LOGO.png'); }*/
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 280px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loader"></div>
+        <div class="welcome-text">Selamat Datang di Panduan Dokumen Indonesia</div>
+        <p class="text-white opacity-80 mt-2">Memuat informasi lengkap untuk Anda...</p>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator" id="scrollIndicator"></div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-xl font-semibold text-gray-800">Kategori Dokumen</h3>
+                <button onclick="closeSidebar()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="category-section">
+                    <h4 class="font-medium text-gray-700 mb-2 flex items-center">
+                        <i class="fas fa-id-card mr-2 text-blue-600"></i> <!-- Adjusted to a slightly darker blue for contrast -->
+                        Kependudukan
+                    </h4>
+                    <ul class="ml-6 space-y-1 text-sm">
+                        <li><a href="#ktp" onclick="scrollToSection('ktp')" class="text-gray-600 hover:text-blue-700">KTP</a></li>
+                        <li><a href="#kk" onclick="scrollToSection('kk')" class="text-gray-600 hover:text-blue-700">Kartu Keluarga</a></li>
+                        <li><a href="#akta-kelahiran" onclick="scrollToSection('akta-kelahiran')" class="text-gray-600 hover:text-blue-700">Akta Kelahiran</a></li>
+                        <li><a href="#akta-nikah" onclick="scrollToSection('akta-nikah')" class="text-gray-600 hover:text-blue-700">Akta Nikah</a></li>
+                        <li><a href="#akta-perceraian" onclick="scrollToSection('akta-perceraian')" class="text-gray-600 hover:text-blue-700">Akta Perceraian</a></li>
+                        <li><a href="#akta-kematian" onclick="scrollToSection('akta-kematian')" class="text-gray-600 hover:text-blue-700">Akta Kematian</a></li>
+                    </ul>
+                </div>
+                
+                <div class="category-section">
+                    <h4 class="font-medium text-gray-700 mb-2 flex items-center">
+                        <i class="fas fa-car mr-2 text-green-600"></i>
+                        Kendaraan
+                    </h4>
+                    <ul class="ml-6 space-y-1 text-sm">
+                        <li><a href="#sim" onclick="scrollToSection('sim')" class="text-gray-600 hover:text-blue-700">SIM</a></li>
+                        <li><a href="#stnk" onclick="scrollToSection('stnk')" class="text-gray-600 hover:text-blue-700">STNK</a></li>
+                        <li><a href="#bpkb" onclick="scrollToSection('bpkb')" class="text-gray-600 hover:text-blue-700">BPKB</a></li>
+                    </ul>
+                </div>
+                
+                <div class="category-section">
+                    <h4 class="font-medium text-gray-700 mb-2 flex items-center">
+                        <i class="fas fa-graduation-cap mr-2 text-indigo-600"></i> <!-- Adjusted to indigo for better contrast with new blue -->
+                        Pendidikan
+                    </h4>
+                    <ul class="ml-6 space-y-1 text-sm">
+                        <li><a href="#ijazah" onclick="scrollToSection('ijazah')" class="text-gray-600 hover:text-blue-700">Ijazah</a></li>
+                    </ul>
+                </div>
+                
+                <div class="category-section">
+                    <h4 class="font-medium text-gray-700 mb-2 flex items-center">
+                        <i class="fas fa-plane mr-2 text-red-600"></i>
+                        Perjalanan
+                    </h4>
+                    <ul class="ml-6 space-y-1 text-sm">
+                        <li><a href="#paspor" onclick="scrollToSection('paspor')" class="text-gray-600 hover:text-blue-700">Paspor</a></li>
+                    </ul>
+                </div>
+                
+                <div class="category-section">
+                    <h4 class="font-medium text-gray-700 mb-2 flex items-center">
+                        <i class="fas fa-calculator mr-2 text-yellow-600"></i>
+                        Pajak & Sosial
+                    </h4>
+                    <ul class="ml-6 space-y-1 text-sm">
+                        <li><a href="#npwp" onclick="scrollToSection('npwp')" class="text-gray-600 hover:text-blue-700">NPWP</a></li>
+                        <li><a href="#kks" onclick="scrollToSection('kks')" class="text-gray-600 hover:text-blue-700">KKS</a></li>
+                        <li><a href="#kip" onclick="scrollToSection('kip')" class="text-gray-600 hover:text-blue-700">KIP</a></li>
+                        <li><a href="#kis" onclick="scrollToSection('kis')" class="text-gray-600 hover:text-blue-700">KIS</a></li>
+                        <li><a href="#prakerja" onclick="scrollToSection('prakerja')" class="text-gray-600 hover:text-blue-700">Kartu Prakerja</a></li>
+                        <li><a href="#sktm" onclick="scrollToSection('sktm')" class="text-gray-600 hover:text-blue-700">SKTM</a></li>
+                    </ul>
+                </div>
+                
+                <div class="category-section">
+                    <h4 class="font-medium text-gray-700 mb-2 flex items-center">
+                        <i class="fas fa-shield-alt mr-2 text-teal-600"></i> <!-- Adjusted to teal for better contrast with new blue -->
+                        Keamanan & Properti
+                    </h4>
+                    <ul class="ml-6 space-y-1 text-sm">
+                        <li><a href="#skck" onclick="scrollToSection('skck')" class="text-gray-600 hover:text-blue-700">SKCK</a></li>
+                        <li><a href="#sertifikat-tanah" onclick="scrollToSection('sertifikat-tanah')" class="text-gray-600 hover:text-blue-700">Sertifikat Tanah</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+    <!-- Header -->
+    <header class="hero-gradient text-white py-6 sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <button onclick="openSidebar()" class="lg:hidden p-2 hover:bg-white hover:bg-opacity-20 rounded-lg transition-all">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    <h1 class="text-xl lg:text-2xl font-bold">
+                        <i class="fas fa-file-alt mr-2"></i>
+                        Panduan Dokumen Indonesia
+                    </h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="toggleDarkMode()" class="p-2 hover:bg-white hover:bg-opacity-20 rounded-lg transition-all">
+                        <i class="fas fa-moon" id="darkModeIcon"></i>
+                    </button>
+                    <div class="hidden lg:flex items-center space-x-6">
+                        <a href="#faq" class="hover:text-gray-200 transition-colors">FAQ</a>
+                        <a href="#tips" class="hover:text-gray-200 transition-colors">Tips</a>
+                        <a href="#kontak" class="hover:text-gray-200 transition-colors">Kontak</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient text-white py-16 lg:py-24">
+        <div class="container mx-auto px-4 text-center">
+            <div class="fade-in">
+                <h2 class="text-3xl lg:text-5xl font-bold mb-6">
+                    Panduan Lengkap Mengurus Dokumen di Indonesia
+                </h2>
+                <p class="text-lg lg:text-xl mb-8 opacity-90 max-w-2xl mx-auto">
+                    Temukan cara mudah dan cepat untuk mengurus berbagai dokumen penting. Dari KTP hingga Paspor, semua ada di sini!
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <button onclick="document.getElementById('searchInput').focus()" class="bg-white text-blue-700 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-all transform hover:scale-105">
+                        <i class="fas fa-search mr-2"></i>
+                        Mulai Pencarian
+                    </button>
+                    <a href="#dokumen" class="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-blue-700 transition-all transform hover:scale-105">
+                        Lihat Semua Dokumen
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Statistics -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+                <div class="fade-in">
+                    <div class="text-3xl lg:text-4xl font-bold mb-2" data-count="19">0</div>
+                    <div class="text-lg opacity-80">Jenis Dokumen</div>
+                </div>
+                <div class="fade-in">
+                    <div class="text-3xl lg:text-4xl font-bold mb-2" data-count="100">0</div>
+                    <div class="text-lg opacity-80">Gratis</div>
+                </div>
+                <div class="fade-in">
+                    <div class="text-3xl lg:text-4xl font-bold mb-2" data-count="24">0</div>
+                    <div class="text-lg opacity-80">Jam Akses</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="relative">
+                    <input 
+                        type="text" 
+                        id="searchInput"
+                        placeholder="Cari dokumen (contoh: KTP, paspor, NPWP)..." 
+                        class="w-full py-4 px-6 text-lg border-2 border-gray-300 rounded-full focus:border-blue-600 focus:outline-none pr-16"
+                        oninput="searchDocuments()"
+                    >
+                    <button class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-600">
+                        <i class="fas fa-search text-xl"></i>
+                    </button>
+                </div>
+                
+                <!-- Search Results -->
+                <div id="searchResults" class="mt-6 hidden">
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <h3 class="text-lg font-semibold mb-3 text-gray-800">Hasil Pencarian:</h3>
+                        <div id="searchResultsList"></div>
+                    </div>
+                </div>
+                
+                <!-- Filter Tags -->
+                <div class="flex flex-wrap gap-2 mt-6 justify-center">
+                    <button onclick="filterByCategory('all')" class="filter-tag active px-4 py-2 bg-blue-600 text-white rounded-full text-sm font-medium hover:bg-blue-700 transition-colors">
+                        Semua
+                    </button>
+                    <button onclick="filterByCategory('kependudukan')" class="filter-tag px-4 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-300 transition-colors">
+                        Kependudukan
+                    </button>
+                    <button onclick="filterByCategory('kendaraan')" class="filter-tag px-4 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-300 transition-colors">
+                        Kendaraan
+                    </button>
+                    <button onclick="filterByCategory('pendidikan')" class="filter-tag px-4 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-300 transition-colors">
+                        Pendidikan
+                    </button>
+                    <button onclick="filterByCategory('sosial')" class="filter-tag px-4 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-300 transition-colors">
+                        Sosial
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Documents Grid -->
+    <section id="dokumen" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-4">Daftar Lengkap Dokumen</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Pilih dokumen yang ingin Anda urus dan ikuti panduan lengkap step-by-step</p>
+            </div>
+            
+            <div id="documentsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Documents will be rendered here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-4">Pertanyaan yang Sering Diajukan</h2>
+                <p class="text-lg text-gray-600">Temukan jawaban untuk pertanyaan umum seputar pengurusan dokumen</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto space-y-4">
+                <div class="faq-item bg-gray-50 rounded-lg p-6 cursor-pointer hover:bg-gray-100 transition-colors" onclick="toggleFAQ(this)">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-semibold text-gray-800">Berapa lama waktu yang diperlukan untuk membuat KTP?</h3>
+                        <i class="fas fa-chevron-down text-gray-500 transform transition-transform"></i>
+                    </div>
+                    <div class="faq-answer mt-4 text-gray-600 hidden">
+                        <p>Waktu pembuatan KTP elektronik biasanya membutuhkan waktu 14 hari kerja tergantung ketersediaan blangko. Namun, di beberapa daerah bisa lebih cepat atau lebih lama.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item bg-gray-50 rounded-lg p-6 cursor-pointer hover:bg-gray-100 transition-colors" onclick="toggleFAQ(this)">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-semibold text-gray-800">Apakah ada biaya untuk mengurus dokumen kependudukan?</h3>
+                        <i class="fas fa-chevron-down text-gray-500 transform transition-transform"></i>
+                    </div>
+                    <div class="faq-answer mt-4 text-gray-600 hidden">
+                        <p>Menurut peraturan, pengurusan dokumen kependudukan seperti KTP, KK, dan Akta Kelahiran adalah GRATIS. Jika dimintai biaya, Anda bisa melaporkan ke instansi terkait.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item bg-gray-50 rounded-lg p-6 cursor-pointer hover:bg-gray-100 transition-colors" onclick="toggleFAQ(this)">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-semibold text-gray-800">Bagaimana jika dokumen hilang di luar kota domisili?</h3>
+                        <i class="fas fa-chevron-down text-gray-500 transform transition-transform"></i>
+                    </div>
+                    <div class="faq-answer mt-4 text-gray-600 hidden">
+                        <p>Anda tetap harus mengurus di tempat domisili sesuai KTP. Namun, untuk dokumen seperti SIM dan SKCK, bisa diurus di tempat Anda berada saat ini dengan syarat tertentu.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item bg-gray-50 rounded-lg p-6 cursor-pointer hover:bg-gray-100 transition-colors" onclick="toggleFAQ(this)">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-semibold text-gray-800">Apakah bisa mengurus dokumen secara online?</h3>
+                        <i class="fas fa-chevron-down text-gray-500 transform transition-transform"></i>
+                    </div>
+                    <div class="faq-answer mt-4 text-gray-600 hidden">
+                        <p>Beberapa dokumen sudah bisa diurus secara online seperti NPWP dan pendaftaran paspor. Namun, kebanyakan masih memerlukan kehadiran fisik untuk verifikasi dan pengambilan dokumen.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tips Section -->
+    <section id="tips" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-4">Tips & Trik</h2>
+                <p class="text-lg text-gray-600">Kiat-kiat praktis untuk memudahkan pengurusan dokumen Anda</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg p-6 shadow-md card-hover">
+                    <div class="text-3xl mb-4">📋</div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Persiapkan Dokumen Lengkap</h3>
+                    <p class="text-gray-600">Siapkan semua dokumen yang diperlukan sebelum datang ke kantor untuk menghindari bolak-balik.</p>
+                </div>
+                
+                <div class="bg-white rounded-lg p-6 shadow-md card-hover">
+                    <div class="text-3xl mb-4">⏰</div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Datang Pagi Hari</h3>
+                    <p class="text-gray-600">Usahakan datang di pagi hari untuk menghindari antrian panjang dan mendapat pelayanan yang lebih baik.</p>
+                </div>
+                
+                <div class="bg-white rounded-lg p-6 shadow-md card-hover">
+                    <div class="text-3xl mb-4">📱</div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Manfaatkan Layanan Online</h3>
+                    <p class="text-gray-600">Gunakan layanan online untuk pendaftaran awal jika tersedia untuk menghemat waktu.</p>
+                </div>
+                
+                <div class="bg-white rounded-lg p-6 shadow-md card-hover">
+                    <div class="text-3xl mb-4">💰</div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Waspada Pungli</h3>
+                    <p class="text-gray-600">Ketahui biaya resmi setiap pengurusan dokumen. Laporkan jika ada pungutan tidak sah.</p>
+                </div>
+                
+                <div class="bg-white rounded-lg p-6 shadow-md card-hover">
+                    <div class="text-3xl mb-4">📄</div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Fotokopi Cadangan</h3>
+                    <p class="text-gray-600">Selalu bawa fotokopi cadangan dokumen penting untuk antisipasi jika ada yang terlewat.</p>
+                </div>
+                
+                <div class="bg-white rounded-lg p-6 shadow-md card-hover">
+                    <div class="text-3xl mb-4">📞</div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Konfirmasi Jam Operasional</h3>
+                    <p class="text-gray-600">Pastikan jam operasional kantor sebelum berkunjung untuk menghindari perjalanan sia-sia.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="kontak" class="py-16 bg-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-8">Butuh Bantuan Lebih Lanjut?</h2>
+            <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+                Jika Anda memerlukan informasi lebih detail atau mengalami kesulitan, silakan hubungi instansi terkait atau gunakan sumber informasi resmi.
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                <div class="bg-gray-50 rounded-lg p-6 card-hover">
+                    <i class="fas fa-phone text-3xl text-blue-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Hotline</h3>
+                    <p class="text-gray-600">Hubungi hotline masing-masing instansi untuk bantuan langsung</p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-lg p-6 card-hover">
+                    <i class="fas fa-globe text-3xl text-green-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Website Resmi</h3>
+                    <p class="text-gray-600">Kunjungi website resmi pemerintah untuk informasi terkini</p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-lg p-6 card-hover">
+                    <i class="fas fa-map-marker-alt text-3xl text-red-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Kantor Terdekat</h3>
+                    <p class="text-gray-600">Datang langsung ke kantor instansi terdekat di wilayah Anda</p>
+                </div>
+            </div>
+
+            <!-- New Contact Buttons for RT and Dukuh -->
+            <div class="mt-12">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">Hubungi Pengurus Wilayah</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 max-w-5xl mx-auto">
+                    <a href="https://wa.me/6281234567890" target="_blank" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center">
+                        <i class="fab fa-whatsapp mr-2"></i> Ketua RT 1
+                    </a>
+                    <a href="https://wa.me/6281234567891" target="_blank" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center">
+                        <i class="fab fa-whatsapp mr-2"></i> Ketua RT 2
+                    </a>
+                    <a href="https://wa.me/6281234567892" target="_blank" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center">
+                        <i class="fab fa-whatsapp mr-2"></i> Ketua RT 3
+                    </a>
+                    <a href="https://wa.me/6281234567893" target="_blank" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center">
+                        <i class="fab fa-whatsapp mr-2"></i> Ketua RT 4
+                    </a>
+                    <a href="https://wa.me/6281234567894" target="_blank" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center">
+                        <i class="fab fa-whatsapp mr-2"></i> Kepala Dukuh
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="hero-gradient text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <h3 class="text-2xl font-bold mb-4">
+                        <i class="fas fa-file-alt mr-2"></i>
+                        Panduan Dokumen Indonesia
+                    </h3>
+                    <p class="text-gray-200 mb-4">
+                        Platform informasi lengkap untuk membantu Anda mengurus berbagai dokumen penting di Indonesia dengan mudah dan efisien khususnya di Dusun Kluwih berada di Kalurahan Balecatur, Kapanewon Gamping, Kabupaten Sleman.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="hover:text-gray-300">
+                            <i class="fab fa-facebook text-xl"></i>
+                        </a>
+                        <a href="#" class="hover:text-gray-300">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="hover:text-gray-300">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-200">
+                        <li><a href="#dokumen" class="hover:text-white">Semua Dokumen</a></li>
+                        <li><a href="#faq" class="hover:text-white">FAQ</a></li>
+                        <li><a href="#tips" class="hover:text-white">Tips</a></li>
+                        <li><a href="#kontak" class="hover:text-white">Kontak</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Kategori</h4>
+                    <ul class="space-y-2 text-gray-200">
+                        <li><a href="#" class="hover:text-white">Kependudukan</a></li>
+                        <li><a href="#" class="hover:text-white">Kendaraan</a></li>
+                        <li><a href="#" class="hover:text-white">Pendidikan</a></li>
+                        <li><a href="#" class="hover:text-white">Sosial</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-600 pt-8 mt-8 text-center text-gray-200">
+                <p>&copy; 2025 Panduan Dokumen Indonesia. Dibuat untuk membantu masyarakat Indonesia oleh Kelompok Kuliah Kerja Nyata Mandiri 23118 Universitas Negeri Yogyakarta 2025 .</p>
+                <!-- Lokaseva Logo -->
+                <div class="mt-4">
+                    <img src="https://github.com/ghoitsunnn/lokaseva/blob/main/media/logo.png?raw=false" alt="Lokaseva Logo" class="mx-auto h-12 lokaseva-logo">
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Document Detail Modal -->
+    <div id="documentModal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:p-0">
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+            
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="flex justify-between items-start mb-6">
+                        <h3 class="text-2xl font-bold text-gray-900" id="modalTitle"></h3>
+                        <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    
+                    <div id="modalContent" class="space-y-6">
+                        <!-- Content will be populated by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 flex justify-end">
+                    <button onclick="closeModal()" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                        Tutup
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Document data
+        const documents = [
+            {
+                id: 'ktp',
+                title: 'Kartu Tanda Penduduk (KTP)',
+                category: 'kependudukan',
+                icon: 'fas fa-id-card',
+                color: 'blue',
+                description: 'KTP adalah dokumen identitas diri utama yang wajib dimiliki oleh setiap Warga Negara Indonesia (WNI) yang telah berusia 17 tahun atau sudah menikah.',
+                requirements: [
+                    'Fotokopi Kartu Keluarga (KK)',
+                    'Fotokopi Akta Kelahiran',
+                    'Surat pengantar dari RT/RW'
+                ],
+                steps: [
+                    'Siapkan fotokopi Kartu Keluarga (KK), fotokopi Akta Kelahiran, dan surat pengantar dari RT/RW',
+                    'Datang ke Kelurahan/Kecamatan dengan membawa semua berkas persyaratan',
+                    'Ikuti proses perekaman data biometrik (sidik jari, iris mata, dan foto)',
+                    'Tunggu proses pencetakan KTP elektronik (waktu tunggu bervariasi)'
+                ],
+                lostSteps: [
+                    'Buat surat kehilangan dari kepolisian',
+                    'Siapkan fotokopi KK dan formulir permohonan dari kelurahan',
+                    'Datang ke Kelurahan/Kecamatan dengan membawa semua berkas',
+                    'Ikuti proses penggantian dan pencetakan ulang KTP'
+                ],
+                changeSteps: [
+                    'Bawa KTP asli yang ingin diubah dan fotokopi KK',
+                    'Siapkan dokumen pendukung perubahan (Akta Nikah/Cerai, Ijazah, dll)',
+                    'Datang ke Kelurahan/Kecamatan dan serahkan berkas',
+                    'Tunggu proses perubahan data dan pencetakan ulang KTP'
+                ],
+                source: 'https://dukcapil.kemendagri.go.id/',
+                agency: 'Direktorat Jenderal Kependudukan dan Pencatatan Sipil (Ditjen Dukcapil)'
+            },
+            {
+                id: 'kk',
+                title: 'Kartu Keluarga (KK)',
+                category: 'kependudukan',
+                icon: 'fas fa-users',
+                color: 'green',
+                description: 'KK adalah dokumen penting yang berisi data tentang susunan, hubungan, dan jumlah anggota keluarga.',
+                requirements: [
+                    'Surat pengantar dari RT/RW',
+                    'Fotokopi KTP semua anggota keluarga',
+                    'Akta Kelahiran',
+                    'Akta Nikah/Buku Nikah (jika sudah menikah)'
+                ],
+                steps: [
+                    'Siapkan surat pengantar dari RT/RW',
+                    'Kumpulkan fotokopi KTP semua anggota keluarga, Akta Kelahiran, dan Akta Nikah',
+                    'Datang ke Kelurahan/Kecamatan dan serahkan berkas',
+                    'Tunggu proses verifikasi dan penerbitan KK baru'
+                ],
+                lostSteps: [
+                    'Buat surat kehilangan dari kepolisian',
+                    'Siapkan fotokopi KK lama (jika ada)',
+                    'Datang ke Kelurahan/Kecamatan dengan berkas lengkap',
+                    'Ikuti prosedur pengurusan penerbitan KK baru'
+                ],
+                changeSteps: [
+                    'Bawa KK asli yang akan diubah',
+                    'Siapkan fotokopi KTP semua anggota keluarga',
+                    'Bawa dokumen pendukung perubahan (Akta Kelahiran, Kematian, dll)',
+                    'Serahkan berkas dan tunggu pencetakan KK baru'
+                ],
+                source: 'https://dukcapil.kemendagri.go.id/',
+                agency: 'Direktorat Jenderal Kependudukan dan Pencatatan Sipil (Ditjen Dukcapil)'
+            },
+            {
+                id: 'akta-kelahiran',
+                title: 'Akta Kelahiran',
+                category: 'kependudukan',
+                icon: 'fas fa-baby',
+                color: 'pink',
+                description: 'Akta Kelahiran adalah bukti otentik dan sah secara hukum mengenai status dan peristiwa kelahiran seseorang.',
+                requirements: [
+                    'Fotokopi KK',
+                    'Fotokopi KTP orang tua',
+                    'Surat keterangan lahir dari bidan/rumah sakit',
+                    'Fotokopi Akta Nikah/Buku Nikah orang tua'
+                ],
+                steps: [
+                    'Siapkan fotokopi KK dan KTP orang tua',
+                    'Ambil surat keterangan lahir dari bidan/rumah sakit',
+                    'Bawa fotokopi Akta Nikah/Buku Nikah orang tua',
+                    'Datang ke Dinas Dukcapil untuk proses verifikasi dan penerbitan'
+                ],
+                lostSteps: [
+                    'Buat surat kehilangan dari kepolisian',
+                    'Siapkan fotokopi Akta Kelahiran lama (jika ada) dan fotokopi KK',
+                    'Datang ke Dinas Dukcapil dengan berkas lengkap',
+                    'Ajukan permohonan pencetakan ulang'
+                ],
+                changeSteps: [
+                    'Perubahan data Akta Kelahiran sangat jarang dan harus melalui prosedur hukum ketat',
+                    'Jika ada kesalahan penulisan, ajukan permohonan melalui Pengadilan Negeri',
+                    'Siapkan dokumen pendukung yang valid',
+                    'Ikuti proses hukum yang ditetapkan pengadilan'
+                ],
+                source: 'https://dukcapil.kemendagri.go.id/',
+                agency: 'Direktorat Jenderal Kependudukan dan Pencatatan Sipil (Ditjen Dukcapil)'
+            },
+            {
+                id: 'npwp',
+                title: 'Nomor Pokok Wajib Pajak (NPWP)',
+                category: 'sosial',
+                icon: 'fas fa-calculator',
+                color: 'yellow',
+                description: 'NPWP adalah nomor identitas yang diberikan kepada wajib pajak sebagai sarana dalam administrasi perpajakan.',
+                requirements: [
+                    'Fotokopi KTP (bagi WNI)',
+                    'Surat keterangan pekerjaan dari perusahaan',
+                    'Surat pernyataan usaha (bagi wiraswasta)'
+                ],
+                steps: [
+                    'Siapkan fotokopi KTP dan surat keterangan pekerjaan',
+                    'Daftar online melalui situs DJP atau datang ke KPP terdekat',
+                    'Isi formulir pendaftaran secara lengkap',
+                    'Tunggu proses verifikasi dan penerbitan NPWP'
+                ],
+                lostSteps: [
+                    'Buat surat kehilangan dari kepolisian',
+                    'Siapkan fotokopi KTP dan fotokopi NPWP lama (jika ada)',
+                    'Datang ke Kantor Pelayanan Pajak (KPP)',
+                    'Ajukan permohonan cetak ulang NPWP'
+                ],
+                changeSteps: [
+                    'Bawa NPWP lama dan fotokopi KTP',
+                    'Siapkan dokumen pendukung perubahan (Akta Nikah, dll)',
+                    'Datang ke KPP terdekat',
+                    'Ajukan permohonan perubahan data dan ikuti prosedur'
+                ],
+                source: 'https://www.pajak.go.id/',
+                agency: 'Direktorat Jenderal Pajak (DJP) Kementerian Keuangan'
+            },
+            {
+                id: 'akta-nikah',
+                title: 'Akta Nikah / Buku Nikah',
+                category: 'kependudukan',
+                icon: 'fas fa-heart',
+                color: 'red',
+                description: 'Akta/Buku Nikah adalah bukti sah dari pernikahan yang dicatat secara hukum oleh negara.',
+                requirements: [
+                    'Surat pengantar dari kelurahan',
+                    'Fotokopi KTP dan KK calon pengantin',
+                    'Fotokopi Akta Kelahiran',
+                    'Pas foto',
+                    'Surat pernyataan belum pernah menikah'
+                ],
+                steps: [
+                    'Siapkan semua dokumen persyaratan',
+                    'Daftar ke KUA (Muslim) atau Dukcapil (non-Muslim)',
+                    'Ikuti prosesi pernikahan sesuai agama/kepercayaan',
+                    'Terima Buku Nikah/Akta Nikah dari petugas'
+                ],
+                lostSteps: [
+                    'Buat surat kehilangan dari kepolisian',
+                    'Siapkan fotokopi Buku Nikah lama (jika ada)',
+                    'Bawa fotokopi KTP dan KK',
+                    'Ajukan permohonan duplikat di KUA/Dukcapil'
+                ],
+                changeSteps: [
+                    'Perubahan data harus melalui prosedur koreksi',
+                    'Datang ke KUA/Dukcapil dengan dokumen pendukung',
+                    'Jika kesalahan fatal, perlu penetapan Pengadilan',
+                    'Ikuti prosedur yang ditetapkan instansi'
+                ],
+                source: 'https://www.kemenag.go.id/ | https://dukcapil.kemendagri.go.id/',
+                agency: 'Kementerian Agama (Muslim) / Ditjen Dukcapil (non-Muslim)'
+            },
+            {
+                id: 'akta-perceraian',
+                title: 'Akta Perceraian',
+                category: 'kependudukan',
+                icon: 'fas fa-balance-scale',
+                color: 'gray',
+                description: 'Akta Perceraian adalah bukti sah dari putusnya perkawinan.',
+                requirements: [
+                    'Putusan/Penetapan Pengadilan yang sudah inkrah',
+                    'Akta/Buku Nikah',
+                    'Fotokopi KTP',
+                    'Fotokopi KK'
+                ],
+                steps: [
+                    'Siapkan Putusan Pengadilan yang sudah berkekuatan hukum tetap',
+                    'Bawa Akta/Buku Nikah, fotokopi KTP, dan KK',
+                    'Datang ke Dinas Dukcapil',
+                    'Tunggu proses penerbitan Akta Perceraian'
+                ],
+                lostSteps: [
+                    'Buat surat kehilangan dari kepolisian',
+                    'Siapkan salinan putusan Pengadilan dan fotokopi KK',
+                    'Datang ke Dinas Dukcapil',
+                    'Ajukan permohonan pencetakan ulang'
+                ],
+                changeSteps: [
+                    'Perubahan data sangat jarang terjadi',
+                    'Jika ada kesalahan, ajukan koreksi ke Dinas Dukcapil',
+                    'Bawa dokumen pendukung yang valid',
+                    'Ikuti prosedur koreksi yang berlaku'
+                ],
+                source: 'https://dukcapil.kemendagri.go.id/',
+                agency: 'Direktorat Jenderal Kependudukan dan Pencatatan Sipil (Ditjen Dukcapil)'
+            },
+            {
+                id: 'akta-kematian',
+                title: 'Akta Kematian',
+                category: 'kependudukan',
+                icon: 'fas fa-cross',
+                color: 'black',
+                description: 'Akta Kematian adalah bukti sah yang menyatakan bahwa seseorang telah meninggal dunia.',
+                requirements: [
+                    'Surat pengantar dari RT/RW',
+                    'Surat keterangan kematian dari dokter/rumah sakit',
+                    'Fotokopi KTP dan KK almarhum',
+                    'KTP pelapor'
+                ],
+                steps: [
+                    'Siapkan surat pengantar dari RT/RW',
+                    'Ambil surat keterangan kematian dari dokter/rumah sakit',
+                    'Bawa fotokopi KTP dan KK almarhum serta KTP pelapor',
+                    'Datang ke Dinas Dukcapil untuk pencatatan dan penerbitan'
+                ],
+                lostSteps: [
+                    'Buat surat kehilangan dari kepolisian',
+                    'Siapkan fotokopi KK',
+                    'Datang ke Dinas Dukcapil',
+                    'Ajukan permohonan pencetakan ulang'
+                ],
+                changeSteps: [
+                    'Perubahan data harus melalui permohonan koreksi',
+                    'Datang ke Dinas Dukcapil dengan dokumen pendukung',
+                    'Lampirkan dokumen yang valid untuk koreksi',
+                    'Ikuti prosedur yang ditetapkan'
+                ],
+                source: 'https://dukcapil.kemendagri.go.id/',
+                agency: 'Direktorat Jenderal Kependudukan dan Pencatatan Sipil (Ditjen Dukcapil)'
+            },
+            {
+                id: 'ijazah',
+                title: 'Ijazah dan Transkrip Nilai',
+                category: 'pendidikan',
+                icon: 'fas fa-graduation-cap',
+                color: 'indigo', // Changed from purple to indigo for better harmony
+                description: 'Ijazah adalah bukti pengakuan atas selesainya suatu jenjang pendidikan.',
+                requirements: [
+                    'Dokumen diterbitkan otomatis oleh lembaga pendidikan',
+                    'Tidak bisa diajukan secara mandiri'
+                ],
+                steps: [
+                    'Selesaikan studi sesuai kurikulum yang berlaku',
+                    'Penuhi semua persyaratan kelulusan',
+                    'Tunggu proses penerbitan otomatis dari sekolah/kampus',
+                    'Ambil ijazah sesuai jadwal yang ditentukan'
+                ],
+                lostSteps: [
+                    'Buat surat kehilangan dari kepolisian',
+                    'Siapkan fotokopi Ijazah lama (jika ada), fotokopi KTP, dan pas foto',
+                    'Datang ke sekolah/kampus tempat lulus',
+                    'Ajukan permohonan Surat Keterangan Pengganti Ijazah (SKPI)'
+                ],
+                changeSteps: [
+                    'Perubahan data sangat sulit dilakukan',
+                    'Jika ada kesalahan, ajukan koreksi ke lembaga pendidikan',
+                    'Lampirkan dokumen pendukung yang benar (Akta Kelahiran)',
+                    'Ikuti prosedur koreksi yang ditetapkan sekolah/kampus'
+                ],
+                source: 'https://www.kemdikbud.go.id/',
+                agency: 'Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi (Kemendikbudristek)'
+            },
+            {
+                id: 'paspor',
+                title: 'Paspor',
+                category: 'perjalanan',
+                icon: 'fas fa-passport',
+                color: 'red', // Changed from indigo to red for better contrast
+                description: 'Paspor adalah dokumen perjalanan resmi yang dikeluarkan oleh pemerintah untuk WNI yang akan bepergian ke luar negeri.',
+                requirements: [
+                    'E-KTP',
+                    'Kartu Keluarga (KK)',
+                    'Akta Kelahiran/Akta Nikah',
+                    'Ijazah terakhir'
+                ],
+                steps: [
+                    'Siapkan E-KTP, KK, Akta Kelahiran/Nikah, dan Ijazah',
+                    'Daftar online melalui aplikasi M-Paspor atau datang langsung',
+                    'Ikuti proses wawancara, pengambilan sidik jari, dan foto',
+                    'Lakukan pembayaran dan tunggu jadwal pengambilan'
+                ],
+                lostSteps: [
+                    'Buat surat kehilangan dari kepolisian',
+                    'Siapkan E-KTP dan KK',
+                    'Datang ke Kantor Imigrasi',
+                    'Sampaikan kronologi kehilangan dan ikuti proses penggantian'
+                ],
+                changeSteps: [
+                    'Perubahan data (misal nama setelah menikah) dapat diajukan',
+                    'Bawa paspor lama, KTP, KK, dan dokumen pendukung',
+                    'Datang ke Kantor Imigrasi',
+                    'Ikuti prosedur perubahan data yang berlaku'
+                ],
+                source: 'https://www.imigrasi.go.id/id/',
+                agency: 'Direktorat Jenderal Imigrasi Kementerian Hukum dan HAM'
+            },
+            {
+                id: 'sim',
+                title: 'Surat Izin Mengemudi (SIM)',
+                category: 'kendaraan',
+                icon: 'fas fa-id-card-alt',
+                color: 'blue',
+                description: 'SIM adalah bukti registrasi dan identifikasi yang diberikan oleh Polri kepada seseorang yang telah memenuhi syarat untuk mengemudikan kendaraan bermotor.',
+                requirements: [
+                    'E-KTP',
+                    'Surat keterangan sehat jasmani dan rohani',
+                    'Surat hasil tes psikologi'
+                ],
+                steps: [
+                    'Siapkan E-KTP dan surat kesehatan',
+                    'Datang ke Satuan Penyelenggara Administrasi SIM (Satpas)',
+                    'Lakukan pembayaran dan ikuti tes teori serta praktik',
+                    'Jika lulus, ikuti proses foto, sidik jari, dan tanda tangan'
+                ],
+                lostSteps: [
+                    'Buat surat kehilangan dari kepolisian',
+                    'Siapkan fotokopi KTP dan surat keterangan sehat',
+                    'Datang ke Satpas terdekat',
+                    'Ajukan permohonan pencetakan ulang SIM'
+                ],
+                changeSteps: [
+                    'Perubahan data (misal alamat) bisa dilakukan',
+                    'Bawa SIM lama, KTP, dan dokumen pendukung',
+                    'Datang ke Satpas',
+                    'Biasanya perubahan data dilakukan saat perpanjangan'
+                ],
+                source: 'https://korlantas.polri.go.id/',
+                agency: 'Kepolisian Negara Republik Indonesia (Polri)'
+            },
+            {
+                id: 'stnk',
+                title: 'Surat Tanda Nomor Kendaraan (STNK)',
+                category: 'kendaraan',
+                icon: 'fas fa-car',
+                color: 'green',
+                description: 'STNK adalah dokumen yang menjadi bukti legalitas dan pengesahan kepemilikan kendaraan bermotor.',
+                requirements: [
+                    'STNK diterbitkan saat pembelian kendaraan atau perpanjangan'
+                ],
+                steps: [
+                    'STNK otomatis diterbitkan saat membeli kendaraan baru',
+                    'Untuk perpanjangan, datang ke Samsat sebelum masa berlaku habis',
+                    'Bawa dokumen kendaraan dan identitas pemilik',
+                    'Lakukan pembayaran pajak dan ikuti prosedur'
+                ],
+                lostSteps: [
+                    'Buat surat kehilangan dari kepolisian',
+                    'Siapkan fotokopi KTP pemilik, BPKB, dan faktur pembelian',
+                    'Datang ke Samsat untuk cek fisik kendaraan',
+                    'Ikuti prosedur pembayaran dan pencetakan STNK baru'
+                ],
+                changeSteps: [
+                    'Perubahan data bisa dilakukan saat perpanjangan',
+                    'Bawa KTP baru dan BPKB ke Samsat',
+                    'Lakukan perubahan alamat atau ganti nama pemilik',
+                    'Bayar biaya administrasi yang berlaku'
+                ],
+                source: 'https://korlantas.polri.go.id/',
+                agency: 'Kepolisian Negara Republik Indonesia (Polri)'
+            },
+            {
+                id: 'bpkb',
+                title: 'Buku Pemilik Kendaraan Bermotor (BPKB)',
+                category: 'kendaraan',
+                icon: 'fas fa-book',
+                color: 'red',
+                description: 'BPKB adalah dokumen yang menjadi bukti kepemilikan sah atas kendaraan bermotor.',
+                requirements: [
+                    'BPKB diterbitkan otomatis saat pembelian kendaraan'
+                ],
+                steps: [
+                    'BPKB otomatis diterbitkan setelah membeli kendaraan baru',
+                    'Proses penerbitan melalui Ditlantas Polri via Samsat',
+                    'Tunggu proses administrasi yang memakan waktu',
+                    'Ambil BPKB sesuai jadwal yang diberikan'
+                ],
+                lostSteps: [
+                    'Buat surat kehilangan dari kepolisian',
+                    'Siapkan surat pernyataan BPKB hilang, fotokopi KTP, STNK',
+                    'Pasang iklan kehilangan di media massa',
+                    'Datang ke Ditlantas Polri dan lakukan cek fisik kendaraan'
+                ],
+                changeSteps: [
+                    'Perubahan data harus diajukan ke Ditlantas Polri',
+                    'Bawa BPKB asli, KTP, STNK, dan dokumen pendukung',
+                    'Ajukan permohonan perubahan data (nama, alamat, dll)',
+                    'Ikuti prosedur dan bayar biaya administrasi'
+                ],
+                source: 'https://korlantas.polri.go.id/',
+                agency: 'Kepolisian Negara Republik Indonesia (Polri)'
+            },
+            {
+                id: 'sertifikat-tanah',
+                title: 'Sertifikat Tanah (SHM/SHGB)',
+                category: 'properti',
+                icon: 'fas fa-home',
+                color: 'brown',
+                description: 'Sertifikat Tanah adalah dokumen yang menjadi bukti hak atas sebidang tanah.',
+                requirements: [
+                    'Pengurusan melalui Kantor Pertanahan atau PPAT',
+                    'Syarat sangat spesifik termasuk pengukuran tanah'
+                ],
+                steps: [
+                    'Konsultasi dengan PPAT untuk syarat lengkap',
+                    'Siapkan dokumen kepemilikan tanah',
+                    'Lakukan pengukuran tanah oleh BPN',
+                    'Ikuti proses administrasi di Kantor Pertanahan'
+                ],
+                lostSteps: [
+                    'Buat surat kehilangan dari kepolisian',
+                    'Siapkan fotokopi KTP pemilik dan SPPT PBB',
+                    'Ajukan permohonan sertifikat pengganti ke BPN',
+                    'Ikuti proses pemeriksaan dan pengumuman di media'
+                ],
+                changeSteps: [
+                    'Perubahan data seperti nama pemilik harus melalui PPAT',
+                    'Bawa sertifikat asli, KTP, dan dokumen pendukung',
+                    'Proses balik nama untuk warisan atau jual beli',
+                    'Bayar biaya administrasi dan BPHTB jika diperlukan'
+                ],
+                source: 'https://www.atrbpn.go.id/',
+                agency: 'Kementerian Agraria dan Tata Ruang/Badan Pertanahan Nasional (BPN)'
+            },
+            {
+                id: 'skck',
+                title: 'Surat Keterangan Catatan Kepolisian (SKCK)',
+                category: 'keamanan',
+                icon: 'fas fa-shield-alt',
+                color: 'teal', // Changed from blue to teal for better contrast with main blue theme
+                description: 'SKCK adalah surat yang menyatakan bahwa seseorang tidak memiliki catatan kriminal.',
+                requirements: [
+                    'Fotokopi KTP',
+                    'Fotokopi Akta Kelahiran',
+                    'Fotokopi KK',
+                    'Pas foto'
+                ],
+                steps: [
+                    'Siapkan fotokopi KTP, Akta Kelahiran, KK, dan pas foto',
+                    'Datang ke Polsek/Polres sesuai domisili',
+                    'Ikuti proses pengambilan sidik jari',
+                    'SKCK akan diterbitkan pada hari yang sama'
+                ],
+                lostSteps: [
+                    'SKCK tidak bisa dicetak ulang jika hilang',
+                    'Harus membuat SKCK baru dari awal',
+                    'Ikuti prosedur pembuatan baru',
+                    'Bawa semua dokumen persyaratan'
+                ],
+                changeSteps: [
+                    'SKCK tidak bisa diubah datanya',
+                    'Jika ada kesalahan data, buat SKCK baru',
+                    'Lampirkan dokumen pendukung yang benar',
+                    'Ikuti prosedur pembuatan ulang'
+                ],
+                source: 'https://skck.polri.go.id/',
+                agency: 'Kepolisian Negara Republik Indonesia (Polri)'
+            },
+            {
+                id: 'kks',
+                title: 'Kartu Keluarga Sejahtera (KKS)',
+                category: 'sosial',
+                icon: 'fas fa-hands-helping',
+                color: 'green',
+                description: 'KKS adalah kartu untuk keluarga miskin agar dapat mengakses berbagai bantuan sosial non-tunai.',
+                requirements: [
+                    'KKS diterbitkan oleh Kementerian Sosial',
+                    'Disalurkan melalui pemerintah daerah',
+                    'Tidak bisa mendaftar secara mandiri'
+                ],
+                steps: [
+                    'KKS diberikan kepada keluarga yang terdaftar di DTKS',
+                    'Proses seleksi dilakukan oleh pemerintah daerah',
+                    'Keluarga miskin akan diusulkan untuk menerima KKS',
+                    'Kartu akan disalurkan melalui Dinas Sosial'
+                ],
+                lostSteps: [
+                    'Buat surat kehilangan dari kepolisian',
+                    'Siapkan fotokopi KTP dan KK',
+                    'Datang ke Kantor Dinas Sosial',
+                    'Ajukan permohonan penggantian KKS'
+                ],
+                changeSteps: [
+                    'Perubahan data harus diajukan melalui Dinas Sosial',
+                    'Bawa dokumen pendukung yang valid',
+                    'Lampirkan KTP/KK dengan data terbaru',
+                    'Ikuti prosedur yang ditetapkan Dinas Sosial'
+                ],
+                source: 'https://kemensos.go.id/',
+                agency: 'Kementerian Sosial (Kemensos) dan Dinas Sosial daerah'
+            },
+            {
+                id: 'kip',
+                title: 'Kartu Indonesia Pintar (KIP)',
+                category: 'sosial',
+                icon: 'fas fa-school',
+                color: 'orange',
+                description: 'KIP adalah kartu untuk mengakses bantuan biaya pendidikan bagi anak usia sekolah dari keluarga tidak mampu.',
+                requirements: [
+                    'KIP disalurkan oleh pemerintah pusat',
+                    'Siswa terdaftar di DTKS',
+                    'Diusulkan oleh sekolah',
+                    'Tidak bisa mendaftar mandiri'
+                ],
+                steps: [
+                    'KIP diberikan kepada siswa yang memenuhi syarat',
+                    'Siswa akan diusulkan oleh sekolahnya',
+                    'Proses seleksi berdasarkan data DTKS',
+                    'Kartu akan disalurkan melalui sekolah'
+                ],
+                lostSteps: [
+                    'Buat surat kehilangan dari kepolisian',
+                    'Minta surat keterangan hilang dari sekolah',
+                    'Siapkan fotokopi KTP orang tua dan KK',
+                    'Ajukan permohonan cetak ulang melalui sekolah'
+                ],
+                changeSteps: [
+                    'Perubahan data (nama siswa) harus melalui sekolah',
+                    'Lampirkan dokumen pendukung yang benar',
+                    'Serahkan Akta Kelahiran yang valid',
+                    'Ikuti prosedur yang ditetapkan sekolah'
+                ],
+                source: 'https://kemensos.go.id/ | https://www.kemdikbud.go.id/',
+                agency: 'Kementerian Sosial dan Kemendikbudristek'
+            },
+            {
+                id: 'kis',
+                title: 'Kartu Indonesia Sehat (KIS)',
+                category: 'sosial',
+                icon: 'fas fa-heartbeat',
+                color: 'red',
+                description: 'KIS adalah kartu jaminan kesehatan bagi masyarakat miskin dan tidak mampu.',
+                requirements: [
+                    'Penerima KIS PBI terdaftar di DTKS',
+                    'Tidak bisa mendaftar KIS PBI secara mandiri',
+                    'Bisa daftar BPJS Kesehatan Mandiri'
+                ],
+                steps: [
+                    'KIS PBI diberikan kepada masyarakat miskin di DTKS',
+                    'Proses seleksi dilakukan oleh pemerintah',
+                    'Untuk BPJS Mandiri, daftar di kantor BPJS Kesehatan',
+                    'Bayar iuran sesuai kelas yang dipilih'
+                ],
+                lostSteps: [
+                    'Buat surat kehilangan dari kepolisian',
+                    'Siapkan fotokopi KTP dan KK',
+                    'Datang ke kantor BPJS Kesehatan terdekat',
+                    'Ajukan permohonan pencetakan ulang kartu'
+                ],
+                changeSteps: [
+                    'Perubahan data bisa dilakukan di BPJS Kesehatan',
+                    'Bawa KTP dan KK terbaru',
+                    'Datang ke kantor BPJS terdekat',
+                    'Ikuti prosedur perubahan data yang berlaku'
+                ],
+                source: 'https://www.bpjs-kesehatan.go.id/',
+                agency: 'Kementerian Kesehatan dan BPJS Kesehatan'
+            },
+            {
+                id: 'prakerja',
+                title: 'Kartu Prakerja',
+                category: 'sosial',
+                icon: 'fas fa-briefcase',
+                color: 'indigo', // Changed from purple to indigo for better harmony
+                description: 'Kartu Prakerja adalah program pemerintah untuk meningkatkan kompetensi kerja.',
+                requirements: [
+                    'WNI berusia 18 tahun ke atas',
+                    'Tidak sedang menempuh pendidikan formal',
+                    'Lulus seleksi online'
+                ],
+                steps: [
+                    'Kunjungi situs resmi Prakerja',
+                    'Buat akun dan lengkapi data diri',
+                    'Ikuti proses verifikasi dan tes seleksi',
+                    'Tunggu pengumuman kelulusan'
+                ],
+                lostSteps: [
+                    'Kartu Prakerja berbentuk digital',
+                    'Tidak ada risiko kehilangan secara fisik',
+                    'Jika lupa password, gunakan fitur "Lupa Password"',
+                    'Hubungi customer service jika ada masalah akun'
+                ],
+                changeSteps: [
+                    'Perubahan data email/telepon bisa melalui dashboard',
+                    'Akses akun setelah lolos seleksi',
+                    'Data penting seperti NIK tidak bisa diubah',
+                    'Hubungi customer service untuk bantuan'
+                ],
+                source: 'https://www.prakerja.go.id/',
+                agency: 'Kementerian Koordinator Bidang Perekonomian'
+            },
+            {
+                id: 'sktm',
+                title: 'Surat Keterangan Tidak Mampu (SKTM)',
+                category: 'sosial',
+                icon: 'fas fa-file-medical',
+                color: 'gray',
+                description: 'SKTM adalah dokumen yang menyatakan bahwa seseorang atau keluarga tergolong tidak mampu secara ekonomi.',
+                requirements: [
+                    'Surat pengantar dari RT/RW',
+                    'Fotokopi KTP',
+                    'Fotokopi KK'
+                ],
+                steps: [
+                    'Siapkan surat pengantar dari RT/RW',
+                    'Bawa fotokopi KTP dan KK',
+                    'Datang ke Kelurahan/Desa',
+                    'Tunggu proses penerbitan SKTM'
+                ],
+                lostSteps: [
+                    'SKTM tidak bisa dicetak ulang',
+                    'Harus membuat SKTM baru',
+                    'Ikuti prosedur pembuatan baru',
+                    'Bawa semua dokumen persyaratan'
+                ],
+                changeSteps: [
+                    'SKTM tidak bisa diubah datanya',
+                    'Jika ada kesalahan, buat SKTM baru',
+                    'Lampirkan dokumen pendukung yang benar',
+                    'Ikuti prosedur pembuatan ulang'
+                ],
+                source: 'Pemerintah Desa/Kelurahan (tidak ada situs web pusat)',
+                agency: 'Pemerintah Desa/Kelurahan'
+            }
+        ];
+
+        // Initialize page
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+                initializePage();
+            }, 2000);
+        });
+
+        function initializePage() {
+            renderDocuments(documents);
+            setupEventListeners();
+            animateCounters();
+            observeElements();
+        }
+
+        // Render documents
+        function renderDocuments(docs) {
+            const grid = document.getElementById('documentsGrid');
+            grid.innerHTML = '';
+            
+            docs.forEach((doc, index) => {
+                const card = document.createElement('div');
+                card.className = `document-card bg-white rounded-xl p-6 shadow-lg card-hover fade-in`;
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.dataset.category = doc.category;
+                
+                card.innerHTML = `
+                    <div class="flex items-center mb-4">
+                        <div class="text-3xl text-${doc.color}-600 mr-4"> <!-- Adjusted color intensity -->
+                            <i class="${doc.icon}"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800">${doc.title}</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4 line-clamp-3">${doc.description}</p>
+                    <div class="flex justify-between items-center">
+                        <span class="bg-${doc.color}-100 text-${doc.color}-800 px-3 py-1 rounded-full text-sm font-medium">
+                            ${getCategoryName(doc.category)}
+                        </span>
+                        <button 
+                            onclick="openDocumentDetail('${doc.id}')" 
+                            class="bg-gradient-to-r from-blue-600 to-blue-800 text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all transform hover:scale-105"
+                        >
+                            <i class="fas fa-arrow-right mr-2"></i>
+                            Detail
+                        </button>
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        // Get category display name
+        function getCategoryName(category) {
+            const categoryNames = {
+                'kependudukan': 'Kependudukan',
+                'kendaraan': 'Kendaraan',
+                'pendidikan': 'Pendidikan',
+                'sosial': 'Sosial',
+                'keamanan': 'Keamanan',
+                'properti': 'Properti',
+                'perjalanan': 'Perjalanan'
+            };
+            return categoryNames[category] || category;
+        }
+
+        // Search functionality
+        function searchDocuments() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const results = document.getElementById('searchResults');
+            const resultsList = document.getElementById('searchResultsList');
+            
+            if (query.length < 2) {
+                results.classList.add('hidden');
+                return;
+            }
+            
+            const filteredDocs = documents.filter(doc => 
+                doc.title.toLowerCase().includes(query) ||
+                doc.description.toLowerCase().includes(query) ||
+                doc.requirements.some(req => req.toLowerCase().includes(query)) ||
+                doc.steps.some(step => step.toLowerCase().includes(query))
+            );
+            
+            if (filteredDocs.length > 0) {
+                results.classList.remove('hidden');
+                resultsList.innerHTML = filteredDocs.map(doc => `
+                    <div class="mb-3 p-3 bg-white rounded-lg border cursor-pointer hover:bg-gray-50" onclick="openDocumentDetail('${doc.id}')">
+                        <div class="flex items-center">
+                            <i class="${doc.icon} text-${doc.color}-600 mr-3"></i> <!-- Adjusted color intensity -->
+                            <div>
+                                <h4 class="font-medium text-gray-800">${highlightText(doc.title, query)}</h4>
+                                <p class="text-sm text-gray-600">${highlightText(doc.description.substring(0, 100) + '...', query)}</p>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                results.classList.remove('hidden');
+                resultsList.innerHTML = '<p class="text-gray-500 text-center py-4">Tidak ada hasil yang ditemukan</p>';
+            }
+        }
+
+        // Highlight search text
+        function highlightText(text, query) {
+            if (!query) return text;
+            const regex = new RegExp(`(${query})`, 'gi');
+            return text.replace(regex, '<span class="search-highlight">$1</span>');
+        }
+
+        // Filter by category
+        function filterByCategory(category) {
+            const cards = document.querySelectorAll('.document-card');
+            const filterTags = document.querySelectorAll('.filter-tag');
+            
+            // Update active filter
+            filterTags.forEach(tag => {
+                tag.classList.remove('active', 'bg-blue-600', 'text-white');
+                tag.classList.add('bg-gray-200', 'text-gray-700');
+            });
+            
+            event.target.classList.add('active', 'bg-blue-600', 'text-white');
+            event.target.classList.remove('bg-gray-200', 'text-gray-700');
+            
+            // Filter cards
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                    card.style.animation = 'fadeInAnimation 0.5s ease forwards';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Open document detail modal
+        function openDocumentDetail(docId) {
+            const doc = documents.find(d => d.id === docId);
+            if (!doc) return;
+            
+            const modal = document.getElementById('documentModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalContent = document.getElementById('modalContent');
+            
+            modalTitle.textContent = doc.title;
+            modalContent.innerHTML = `
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex items-center mb-3">
+                            <i class="${doc.icon} text-3xl text-${doc.color}-600 mr-3"></i> <!-- Adjusted color intensity -->
+                            <span class="bg-${doc.color}-100 text-${doc.color}-800 px-3 py-1 rounded-full text-sm font-medium">
+                                ${getCategoryName(doc.category)}
+                            </span>
+                        </div>
+                        <p class="text-gray-600 text-lg">${doc.description}</p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-xl font-semibold text-gray-800 mb-3 flex items-center">
+                            <i class="fas fa-list-ul mr-2 text-blue-600"></i> <!-- Adjusted color intensity -->
+                            Persyaratan
+                        </h4>
+                        <ul class="space-y-2">
+                            ${doc.requirements.map(req => `
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-600 mr-2 mt-1"></i> <!-- Adjusted color intensity -->
+                                    <span class="text-gray-700">${req}</span>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-xl font-semibold text-gray-800 mb-3 flex items-center">
+                            <i class="fas fa-clipboard-list mr-2 text-green-600"></i> <!-- Adjusted color intensity -->
+                            Langkah Pembuatan Baru
+                        </h4>
+                        <div class="timeline">
+                            ${doc.steps.map((step, index) => `
+                                <div class="timeline-item">
+                                    <div class="bg-gray-50 p-4 rounded-lg">
+                                        <div class="flex items-start">
+                                            <span class="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3 mt-1"> <!-- Adjusted color intensity -->
+                                                ${index + 1}
+                                            </span>
+                                            <p class="text-gray-700 flex-1">${step}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-xl font-semibold text-gray-800 mb-3 flex items-center">
+                            <i class="fas fa-exclamation-triangle mr-2 text-yellow-600"></i> <!-- Adjusted color intensity -->
+                            Jika Dokumen Hilang
+                        </h4>
+                        <div class="timeline">
+                            ${doc.lostSteps.map((step, index) => `
+                                <div class="timeline-item">
+                                    <div class="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-500"> <!-- Adjusted color intensity -->
+                                        <div class="flex items-start">
+                                            <span class="bg-yellow-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3 mt-1"> <!-- Adjusted color intensity -->
+                                                ${index + 1}
+                                            </span>
+                                            <p class="text-gray-700 flex-1">${step}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-xl font-semibold text-gray-800 mb-3 flex items-center">
+                            <i class="fas fa-edit mr-2 text-indigo-600"></i> <!-- Adjusted color intensity -->
+                            Perubahan Data
+                        </h4>
+                        <div class="timeline">
+                            ${doc.changeSteps.map((step, index) => `
+                                <div class="timeline-item">
+                                    <div class="bg-indigo-50 p-4 rounded-lg border-l-4 border-indigo-500"> <!-- Adjusted color intensity -->
+                                        <div class="flex items-start">
+                                            <span class="bg-indigo-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3 mt-1"> <!-- Adjusted color intensity -->
+                                                ${index + 1}
+                                            </span>
+                                            <p class="text-gray-700 flex-1">${step}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-2 flex items-center">
+                            <i class="fas fa-info-circle mr-2 text-blue-600"></i> <!-- Adjusted color intensity -->
+                            Informasi Resmi
+                        </h4>
+                        <p class="text-gray-700 mb-2"><strong>Lembaga:</strong> ${doc.agency}</p>
+                        <p class="text-gray-700">
+                            <strong>Sumber:</strong> 
+                            <a href="${doc.source}" target="_blank" class="text-blue-700 hover:text-blue-800 underline">
+                                ${doc.source}
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('documentModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Sidebar functions
+        function openSidebar() {
+            document.getElementById('sidebar').classList.add('open');
+            document.getElementById('sidebarOverlay').classList.add('show');
+        }
+
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('sidebarOverlay').classList.remove('show');
+        }
+
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+                closeSidebar();
+            } else {
+                // If section doesn't exist, open the document modal
+                openDocumentDetail(sectionId);
+                closeSidebar();
+            }
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Scroll indicator
+            window.addEventListener('scroll', updateScrollIndicator);
+            window.addEventListener('scroll', toggleBackToTop);
+            
+            // Close modal on escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeModal();
+                    closeSidebar();
+                }
+            });
+        }
+
+        // Update scroll indicator
+        function updateScrollIndicator() {
+            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            document.getElementById('scrollIndicator').style.width = scrolled + '%';
+        }
+
+        // Toggle back to top button
+        function toggleBackToTop() {
+            const backToTop = document.getElementById('backToTop');
+            if (window.scrollY > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        }
+
+        // Scroll to top
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Toggle dark mode
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.getElementById('darkModeIcon');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.className = 'fas fa-sun';
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                icon.className = 'fas fa-moon';
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        }
+
+        // Load dark mode preference
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+            document.getElementById('darkModeIcon').className = 'fas fa-sun';
+        }
+
+        // Toggle FAQ
+        function toggleFAQ(element) {
+            const answer = element.querySelector('.faq-answer');
+            const icon = element.querySelector('i');
+            
+            if (answer.classList.contains('hidden')) {
+                answer.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                answer.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Animate counters
+        function animateCounters() {
+            const counters = document.querySelectorAll('[data-count]');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = parseInt(counter.dataset.count);
+                        let count = 0;
+                        const increment = target / 50;
+                        
+                        const updateCounter = () => {
+                            if (count < target) {
+                                count += increment;
+                                counter.textContent = Math.ceil(count);
+                                requestAnimationFrame(updateCounter);
+                            } else {
+                                counter.textContent = target;
+                            }
+                        };
+                        
+                        updateCounter();
+                        observer.unobserve(counter);
+                    }
+                });
+            });
+            
+            counters.forEach(counter => observer.observe(counter));
+        }
+
+        // Observe elements for animations
+        function observeElements() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.fade-in').forEach(el => {
+                el.style.animationPlayState = 'paused';
+                observer.observe(el);
+            });
+        }
+    </script>
+</body>
+</html>
